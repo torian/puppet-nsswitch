@@ -2,11 +2,11 @@
 class nsswitch::service {
 
 	service { $nsswitch::params::service:
-		ensure     => $module_type ? {
+		ensure     => $nsswitch::module_type ? {
 				'ldap'  => running,
 				default => stopped,
 				},
-		enable     => $module_type ? {
+		enable     => $nsswitch::module_type ? {
 				'ldap'  => true,
 				default => false,
 				},
@@ -18,4 +18,3 @@ class nsswitch::service {
 		require    => Package[$nsswitch::params::service_pkg],
 	}
 }
-
