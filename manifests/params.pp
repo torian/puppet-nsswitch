@@ -5,23 +5,18 @@ class nsswitch::params {
 	
 		debian: {
 			
-			$mod_prefix = 'nsswitch/debian'
+			$package = [ 'nscd', 'libnss-ldap' ]
 			
-			$package = [ 'libnss-ldap' ]
+			$owner    = 'root'
+			$group    = 'root'
+			$config   = "/etc/nsswitch.conf"
+			$ldap_cfg = '/etc/ldap/ldap.conf'
+			$libnss   = "/etc/libnss-ldap.conf"
 			
-			$prefix = '/etc'
-			$owner  = 'root'
-			$group  = 'root'
-			$config = "${prefix}/nsswitch.conf"
-			$libnss = "${prefix}/libnss-ldap.conf"
-
-			$config_src = "${config}"
-
 			$service     = 'nscd'
 			$script      = 'nscd'
 			$pattern     = 'nscd'
 			$service_cfg = $config
-			$service_pkg = 'nscd'
 
 			$databases_ldap = [ 
 				'set *[self::database = "passwd"]/service[1] compat',
@@ -39,8 +34,7 @@ class nsswitch::params {
 				]
 		}
 
-		# Defaults includes: redhat ovs oel
-		default: {
+		redhat: {
 			$mod_prefix = 'nsswitch/redhat'
 			
 			$prefix = '/etc'
@@ -51,7 +45,7 @@ class nsswitch::params {
 
 			if($operatingsystemrelease =~ /^6\./) {
 
-				$package = [ 'nscd' ]
+				$package = [ 'nscd', 'nss-pam-ldapd' ]
 			
 				$config_src  = "${prefix}/nsswitch.conf-6.x"
 				
@@ -59,7 +53,6 @@ class nsswitch::params {
 				$script      = 'nslcd'
 				$pattern     = 'nslcd'
 				$service_cfg = "${prefix}/nslcd.conf"
-				$service_pkg = 'nss-pam-ldapd'
 
 				$databases_ldap = [ 
 					'set *[self::database = "passwd"]/service[1] files',
@@ -104,6 +97,9 @@ class nsswitch::params {
 					]
 			}
 		}
-
+	
+		default: {
+			fail("Operating system ${::operatingsystem} not supported")
+		}
 	}
 }

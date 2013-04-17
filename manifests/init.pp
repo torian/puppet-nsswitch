@@ -26,7 +26,35 @@
 #}
 #
 
-class nsswitch ($uri = false, $base = false, $module_type = 'none') {
-  class { [nsswitch::params, nsswitch::install, nsswitch::service, nsswitch::config]: }
+class nsswitch (
+	$uri         = false,
+	$base        = false,
+	$module_type = 'none',
+	$ensure      = 'present') {
+
+	include nsswitch::params
+	
+	package { $nsswitch::params::package:
+		ensure => $ensure
+	}
+	
+	service { $nsswitch::params::service:
+		ensure     => $module_type ? {
+				'ldap'  => running,
+				default => stopped,
+				},
+		enable     => $module_type ? {
+				'ldap'  => true,
+				default => false,
+				},
+		name       => $nsswitch::params::script,
+		pattern    => $nsswitch::params::pattern,
+		hasstatus  => true,
+		hasrestart => true,
+		subscribe  => File[$nsswitch::params::service_cfg],
+		require    => Package[$nsswitch::params::package],
+	}
+	
+	include nsswitch::config
 
 }
