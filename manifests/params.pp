@@ -98,6 +98,24 @@ class nsswitch::params {
 			}
 		}
 	
+		/(OpenSuSE|SLES)/: {
+			
+			$package = [ 'nscd', 'nss_ldap' ]
+			
+			$owner    = 'root'
+			$group    = 'root'
+			$config   = "/etc/nsswitch.conf"
+			$ldap_cfg = '/etc/ldap/ldap.conf'
+			$libnss   = "/etc/libnss-ldap.conf"
+			
+			$service     = 'nscd'
+			$script      = 'nscd'
+			$pattern     = 'nscd'
+			$service_cfg = $config
+
+		}
+
+
 		default: {
 			fail("Operating system ${::operatingsystem} not supported")
 		}
