@@ -3,7 +3,7 @@ class nsswitch::params {
 
 	case $operatingsystem {
 	
-		debian: {
+		/Debian/: {
 			
 			$package = [ 'nscd', 'libnss-ldap' ]
 			
@@ -34,7 +34,7 @@ class nsswitch::params {
 				]
 		}
 
-		redhat: {
+		/(Redhat|CentOS)/: {
 			$mod_prefix = 'nsswitch/redhat'
 			
 			$prefix = '/etc'
@@ -114,7 +114,6 @@ class nsswitch::params {
 			$service_cfg = $config
 
 		}
-
 
 		default: {
 			fail("Operating system ${::operatingsystem} not supported")
