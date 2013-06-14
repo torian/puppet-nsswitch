@@ -3,7 +3,7 @@ class nsswitch::params {
 
 	case $operatingsystem {
 	
-		/Debian/: {
+		/(?i:Debian)/: {
 			
 			$package = [ 'nscd', 'libnss-ldap' ]
 			
@@ -34,7 +34,7 @@ class nsswitch::params {
 				]
 		}
 
-		/(Redhat|CentOS)/: {
+		/(?i:Redhat|CentOS)/: {
 			$mod_prefix = 'nsswitch/redhat'
 			
 			$prefix = '/etc'
@@ -98,7 +98,7 @@ class nsswitch::params {
 			}
 		}
 	
-		/(OpenSuSE|SLES)/: {
+		/(?i:OpenSuSE|SLES)/: {
 			
 			$package = [ 'nscd', 'nss_ldap' ]
 			
