@@ -11,6 +11,7 @@
 passwd:         files <% if module_type == 'ldap' then %>ldap<% end %>
 group:          files <% if module_type == 'ldap' then %>ldap<% end %>
 shadow:         files <% if module_type == 'ldap' then %>ldap<% end %>
+sudoers:        <% if module_type == 'ldap' then %>ldap<% end%> files
 
 hosts:          files dns
 networks:       files

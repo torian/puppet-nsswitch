@@ -3,9 +3,9 @@ class nsswitch::params {
 
   case $::operatingsystem {
   
-    /(?i:Debian)/: {
+    /(?i:Debian|Ubuntu)/: {
       
-      $package = [ 'nscd', 'libnss-ldap' ]
+      $package = [ 'nscd', 'libnss-ldap', 'sudo-ldap' ]
       
       $owner    = 'root'
       $group    = 'root'
@@ -25,6 +25,8 @@ class nsswitch::params {
         'set *[self::database = "shadow"]/service[2] ldap',
         'set *[self::database = "group" ]/service[1] compat',
         'set *[self::database = "group" ]/service[2] ldap',
+	'set *[self::database = "sudoers" ]/service[1] compat',
+	'set *[self::database = "sudoers" ]/service[2] ldap'
         ]
 
       $databases_none = [
