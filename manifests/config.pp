@@ -2,7 +2,7 @@
 class nsswitch::config {
 
   $module_type = $nsswitch::module_type
-    
+
   file { $nsswitch::params::config:
     ensure  => present,
     owner   => $nsswitch::params::owner,
@@ -10,9 +10,9 @@ class nsswitch::config {
     mode    => 0644,
     content => template("nsswitch/nsswitch.conf.erb")
   }
-    
+
   case $::operatingsystem {
-      
+
     'Debian': {
       if ($module_type == 'ldap') {
         file { $nsswitch::params::libnss:
