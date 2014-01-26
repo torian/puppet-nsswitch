@@ -1,24 +1,24 @@
 # Parameter file for nsswitch.
 class nsswitch::params {
 
-  case $::operatingsystem {
-  
-    /(?i:Debian)/: {
-      
+  case $::osfamily {
+
+    'Debian': {
+
       $package = [ 'nscd', 'libnss-ldap' ]
-      
+
       $owner    = 'root'
       $group    = 'root'
       $config   = '/etc/nsswitch.conf'
       $ldap_cfg = '/etc/ldap/ldap.conf'
       $libnss   = '/etc/libnss-ldap.conf'
-      
+
       $service     = 'nscd'
       $script      = 'nscd'
       $pattern     = 'nscd'
       $service_cfg = $config
 
-      $databases_ldap = [ 
+      $databases_ldap = [
         'set *[self::database = "passwd"]/service[1] compat',
         'set *[self::database = "passwd"]/service[2] ldap',
         'set *[self::database = "shadow"]/service[1] compat',
@@ -34,9 +34,9 @@ class nsswitch::params {
         ]
     }
 
-    /(?i:Redhat|CentOS)/: {
+    'Redhat': {
       $mod_prefix = 'nsswitch/redhat'
-      
+
       $prefix = '/etc'
       $owner  = 'root'
       $group  = 'root'
@@ -46,15 +46,15 @@ class nsswitch::params {
       if($::operatingsystemrelease =~ /^6\./) {
 
         $package = [ 'nscd', ]
-      
+
         $config_src  = "${prefix}/nsswitch.conf-6.x"
-        
+
         $service     = 'nslcd'
         $script      = 'nslcd'
         $pattern     = 'nslcd'
         $service_cfg = "${prefix}/nslcd.conf"
 
-        $databases_ldap = [ 
+        $databases_ldap = [
           'set *[self::database = "passwd"]/service[1] files',
           'set *[self::database = "passwd"]/service[2] sss',
           'set *[self::database = "shadow"]/service[1] files',
@@ -81,7 +81,7 @@ class nsswitch::params {
         $service_cfg = "${prefix}/nsswitch.conf"
         $service_pkg = 'nscd'
 
-        $databases_ldap = [ 
+        $databases_ldap = [
           'set *[self::database = "passwd"]/service[1] files',
           'set *[self::database = "passwd"]/service[2] ldap',
           'set *[self::database = "shadow"]/service[1] files',
@@ -97,17 +97,17 @@ class nsswitch::params {
           ]
       }
     }
-  
-    /(?i:OpenSuSE|SLES)/: {
-      
+
+    'SuSE': {
+
       $package = [ 'nscd', 'nss_ldap' ]
-      
+
       $owner    = 'root'
       $group    = 'root'
-      $config   = "/etc/nsswitch.conf"
+      $config   = '/etc/nsswitch.conf'
       $ldap_cfg = '/etc/ldap/ldap.conf'
-      $libnss   = "/etc/libnss-ldap.conf"
-      
+      $libnss   = '/etc/libnss-ldap.conf'
+
       $service     = 'nscd'
       $script      = 'nscd'
       $pattern     = 'nscd'
