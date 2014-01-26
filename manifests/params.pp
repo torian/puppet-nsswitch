@@ -53,6 +53,7 @@ class nsswitch::params {
         $script      = 'nslcd'
         $pattern     = 'nslcd'
         $service_cfg = "${prefix}/nslcd.conf"
+        $service_pkg = 'nss-pam-ldapd'
 
         $databases_ldap = [
           'set *[self::database = "passwd"]/service[1] files',
