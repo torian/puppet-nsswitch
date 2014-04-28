@@ -71,7 +71,7 @@ class nsswitch::params {
 
 			} else {
 
-				$package = [ 
+				$package = [ 'nss-ldap' ]
 
 				$config_src  = "${prefix}/nsswitch.conf-5.x"
 
