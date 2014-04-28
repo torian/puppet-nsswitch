@@ -11,9 +11,9 @@ class nsswitch::config {
     content => template("nsswitch/nsswitch.conf.erb")
   }
     
-  case $::operatingsystem {
+  case $::osfamily {
       
-    /(?:Debian)/: {
+    'Debian': {
       if ($module_type == 'ldap') {
         file { $nsswitch::params::libnss:
           ensure  => symlink,
@@ -23,7 +23,7 @@ class nsswitch::config {
       }
     }
 
-    /(?i:Redhat|CentOS)/: {
+    'Redhat': {
       if ($operatingsystemrelease =~ /^6\./ and $module_type == 'ldap') {
         file { '/etc/nslcd.conf':
           ensure  => present,
@@ -42,7 +42,7 @@ class nsswitch::config {
       }
     }
 
-    /(?i:OpenSuSE|SLES)/: {
+    'OpenSuSE': {
       if($module_type == 'ldap') {
         Class['ldap'] -> Class['nsswitch']
       }
