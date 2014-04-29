@@ -8,9 +8,9 @@
 # If you have the `glibc-doc-reference' and `info' packages installed, try:
 # `info libc "Name Service Switch"' for information about this file.
 
-passwd:         files <% if module_type == 'ldap' then %>ldap<% end %>
-group:          files <% if module_type == 'ldap' then %>ldap<% end %>
-shadow:         files <% if module_type == 'ldap' then %>ldap<% end %>
+passwd:         files <% if @module_type == 'ldap' then %>ldap<% end %>
+group:          files <% if @module_type == 'ldap' then %>ldap<% end %>
+shadow:         files <% if @module_type == 'ldap' then %>ldap<% end %>
 
 hosts:          files dns
 networks:       files

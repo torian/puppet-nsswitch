@@ -3,12 +3,12 @@
 # Manual changes are likey to be overwritten
 ###############################################################################
 
-#passwd:     files <% if module_type == 'ldap' then %>sss<% end %>
-#shadow:     files <% if module_type == 'ldap' then %>sss<% end %>
-#group:      files <% if module_type == 'ldap' then %>sss<% end %>
-passwd:     files <% if module_type == 'ldap' then %>ldap<% end %>
-shadow:     files <% if module_type == 'ldap' then %>ldap<% end %>
-group:      files <% if module_type == 'ldap' then %>ldap<% end %>
+#passwd:     files <% if @module_type == 'ldap' then %>sss<% end %>
+#shadow:     files <% if @module_type == 'ldap' then %>sss<% end %>
+#group:      files <% if @module_type == 'ldap' then %>sss<% end %>
+passwd:     files <% if @module_type == 'ldap' then %>ldap<% end %>
+shadow:     files <% if @module_type == 'ldap' then %>ldap<% end %>
+group:      files <% if @module_type == 'ldap' then %>ldap<% end %>
 
 hosts:      files dns
 
