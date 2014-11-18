@@ -34,19 +34,23 @@ class nsswitch (
 
   include nsswitch::params
 
+  $service_ensure = $module_type ? {
+    'ldap'  => running,
+    default => stopped,
+  }
+
+  $service_enable = $module_type ? {
+    'ldap'  => true,
+    default => false,
+  }
+
   package { $nsswitch::params::package:
     ensure => $ensure
   }
 
   service { $nsswitch::params::service:
-    ensure     => $module_type ? {
-        'ldap'  => running,
-        default => stopped,
-        },
-    enable     => $module_type ? {
-        'ldap'  => true,
-        default => false,
-        },
+    ensure     => $service_ensure,
+    enable     => $service_enable,
     name       => $nsswitch::params::script,
     pattern    => $nsswitch::params::pattern,
     hasstatus  => true,
