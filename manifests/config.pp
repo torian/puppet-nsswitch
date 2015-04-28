@@ -16,7 +16,6 @@ class nsswitch::config {
         file { $nsswitch::params::libnss:
           ensure  => symlink,
           target  => $nsswitch::params::ldap_cfg,
-          require => File[$nsswitch::params::ldap_cfg]
         }
       }
     }
